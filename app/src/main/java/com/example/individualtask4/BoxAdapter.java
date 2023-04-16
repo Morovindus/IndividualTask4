@@ -11,6 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.individualtask4.databinding.ItemBinding;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -25,10 +27,7 @@ public class BoxAdapter extends BaseAdapter {
         ctx = context;
         objects = products;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
-
-
 
     @Override
     public int getCount(){
@@ -47,24 +46,20 @@ public class BoxAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        if (view == null){
-            view = lInflater.inflate(R.layout.item, parent, false);
-        }
+        ItemBinding binding = ItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
         Product p = getProduct(position);
-        ((TextView) view.findViewById(R.id.tvId)).setText(p.Id);
-        ((TextView) view.findViewById(R.id.tvDescr)).setText(p.name);
-        ((TextView) view.findViewById(R.id.tvPrice)).setText(p.price + "");
-        ((ImageView) view.findViewById(R.id.ivImage)).setImageResource(p.image);
+        binding.tvId.setText(p.Id);
+        binding.tvDescr.setText(p.name);
+        binding.tvPrice.setText(p.price + "");
+        binding.ivImage.setImageResource(p.image);
 
-        CheckBox cbBuy = (CheckBox) view.findViewById(R.id.cbBox);
+        CheckBox cbBuy = binding.cbBox;
 
         cbBuy.setOnCheckedChangeListener(myCheckChangeList);
         cbBuy.setTag(position);
         cbBuy.setChecked(p.box);
-        return view;
-
+        return binding.getRoot();
     }
 
     Product getProduct(int position){
@@ -96,7 +91,4 @@ public class BoxAdapter extends BaseAdapter {
         }
     };
 
-    public Integer get_my_count(){
-        return this.count;
-    }
 }

@@ -20,40 +20,32 @@ public class MainActivity extends AppCompatActivity {
     BoxAdapter boxAdapter;
     View header, footer;
     ListView lvMain;
-
-    BoxAdapter boxadapter;
-    static View v2;
-    private ActivityMainBinding binding;
+    private static ActivityMainBinding binding_main;
     private static FooterBinding binding_footer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding_main = ActivityMainBinding.inflate(getLayoutInflater());
         binding_footer = FooterBinding.inflate(getLayoutInflater());
-        v2 = getLayoutInflater().inflate(R.layout.footer, null);
-        //binding_footer.getRoot();
-        View view = binding.getRoot();
+        View view = binding_main.getRoot();
         setContentView(view);
-
 
         header = createHeader("Магазин М.Х.Э.");
         footer = createFooter("Количество выбранных товаров:");
         boxAdapter = new BoxAdapter(this, products);
 
         fillData();
-        lvMain = binding.lvMain;
+        lvMain = binding_main.lvMain;
         lvMain.addHeaderView(header);
         lvMain.addFooterView(footer);
         lvMain.setAdapter(boxAdapter);
+
+        Log.d(LOG_TAG, "МАЯК1");
         binding_footer.tvText1.setText("МАЯК");
-
-        View view2 = binding_footer.getRoot();
-        setContentView(view2);
-
+        Log.d(LOG_TAG, "МАЯК2");
     }
 
     public static void Change(Integer count){
-        //((TextView)v2.findViewById(R.id.tvText1)).setText(count.toString());
         binding_footer.tvText1.setText("Товаров в корзине: " + count.toString());
         Log.d(LOG_TAG, count.toString());
     }
@@ -72,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.ic_launcher_foreground, false));
     }
 
-    public void showResult(View v){
-        //Toast.makeText(this, count.toString(), Toast.LENGTH_LONG).show();
-    }
     View createHeader(String text){
         View v = getLayoutInflater().inflate(R.layout.header, null);
         ((TextView)v.findViewById(R.id.tvText)).setText(text);
