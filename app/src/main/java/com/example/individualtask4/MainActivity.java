@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.individualtask4.databinding.ActivityMainBinding;
 import com.example.individualtask4.databinding.FooterBinding;
+import com.example.individualtask4.databinding.HeaderBinding;
 
 import java.util.ArrayList;
 
@@ -22,27 +23,26 @@ public class MainActivity extends AppCompatActivity {
     ListView lvMain;
     private static ActivityMainBinding binding_main;
     private static FooterBinding binding_footer;
+    private static HeaderBinding binding_header;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding_main = ActivityMainBinding.inflate(getLayoutInflater());
+        binding_header = HeaderBinding.inflate(getLayoutInflater());
         binding_footer = FooterBinding.inflate(getLayoutInflater());
         View view = binding_main.getRoot();
         setContentView(view);
 
-        header = createHeader("Магазин М.Х.Э.");
-        footer = createFooter("Количество выбранных товаров:");
+        createHeader("Каталог");
+        createFooter("Товаров в корзине: ");
         boxAdapter = new BoxAdapter(this, products);
 
         fillData();
         lvMain = binding_main.lvMain;
-        lvMain.addHeaderView(header);
-        lvMain.addFooterView(footer);
+        lvMain.addHeaderView(binding_header.getRoot());
+        lvMain.addFooterView(binding_footer.getRoot());
         lvMain.setAdapter(boxAdapter);
 
-        Log.d(LOG_TAG, "МАЯК1");
-        binding_footer.tvText1.setText("МАЯК");
-        Log.d(LOG_TAG, "МАЯК2");
     }
 
     public static void Change(Integer count){
@@ -50,29 +50,25 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, count.toString());
     }
     void fillData(){
-        products.add(new Product("#123456", "Product" + 1, 1 * 1000,
-                R.drawable.ic_launcher_foreground, false));
-        products.add(new Product("#678713","Product" + 2, 2 * 1000,
-                R.drawable.ic_launcher_foreground, false));
-        products.add(new Product("#856683","Product" + 3, 3 * 1000,
-                R.drawable.ic_launcher_foreground, false));
-        products.add(new Product("#962136","Product" + 4, 4 * 1000,
-                R.drawable.ic_launcher_foreground, false));
-        products.add(new Product("#862137","Product" + 5, 5 * 1000,
-                R.drawable.ic_launcher_foreground, false));
-        products.add(new Product("#816398","Product" + 6, 6 * 1000,
-                R.drawable.ic_launcher_foreground, false));
+        products.add(new Product("#123456", "Батарейка ААА", 99,
+                R.drawable.picture_1_foreground, false));
+        products.add(new Product("#678713","Зонтик", 1499,
+                R.drawable.picture_2_foreground, false));
+        products.add(new Product("#856683","Кровать", 13999,
+                R.drawable.picture_3_foreground, false));
+        products.add(new Product("#962136","Торт", 879,
+                R.drawable.picture_4_foreground, false));
+        products.add(new Product("#862137","Фонарь", 1260,
+                R.drawable.picture_5_foreground, false));
+        products.add(new Product("#816398","Наушники", 7980,
+                R.drawable.picture_6_foreground, false));
     }
 
-    View createHeader(String text){
-        View v = getLayoutInflater().inflate(R.layout.header, null);
-        ((TextView)v.findViewById(R.id.tvText)).setText(text);
-        return v;
+    void createHeader(String text){
+        binding_header.tvText.setText(text);
     }
 
-    View createFooter(String text){
-        View v = getLayoutInflater().inflate(R.layout.footer, null);
-        ((TextView)v.findViewById(R.id.tvText1)).setText(text);
-        return v;
+    void createFooter(String text){
+        binding_footer.tvText1.setText(text);
     }
 }

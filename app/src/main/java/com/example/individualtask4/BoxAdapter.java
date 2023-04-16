@@ -51,7 +51,7 @@ public class BoxAdapter extends BaseAdapter {
         Product p = getProduct(position);
         binding.tvId.setText(p.Id);
         binding.tvDescr.setText(p.name);
-        binding.tvPrice.setText(p.price + "");
+        binding.tvPrice.setText(p.price + " рублей");
         binding.ivImage.setImageResource(p.image);
 
         CheckBox cbBuy = binding.cbBox;

@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:textColor="@color/black"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="12dp"
             android:text="">
         </TextView>
     </LinearLayout>
