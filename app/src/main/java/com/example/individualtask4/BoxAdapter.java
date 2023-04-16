@@ -1,6 +1,7 @@
 package com.example.individualtask4;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,13 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class BoxAdapter extends BaseAdapter {
     Context ctx;
+    final String LOG_TAG = "myLogs";
     LayoutInflater lInflater;
     ArrayList<Product> objects;
 
@@ -21,7 +25,10 @@ public class BoxAdapter extends BaseAdapter {
         ctx = context;
         objects = products;
         lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
     }
+
+
 
     @Override
     public int getCount(){
@@ -57,6 +64,7 @@ public class BoxAdapter extends BaseAdapter {
         cbBuy.setTag(position);
         cbBuy.setChecked(p.box);
         return view;
+
     }
 
     Product getProduct(int position){
@@ -71,11 +79,24 @@ public class BoxAdapter extends BaseAdapter {
         }
         return box;
     }
-
+    Integer count = 0;
     CompoundButton.OnCheckedChangeListener myCheckChangeList = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged (CompoundButton buttonView, boolean isChecked){
             getProduct((Integer) buttonView.getTag()).box = isChecked;
+
+            if (isChecked == true) {
+                count += 1;
+                MainActivity.Change(count);
+            }
+            else {
+                count -= 1;
+                MainActivity.Change(count);
+            }
         }
     };
+
+    public Integer get_my_count(){
+        return this.count;
+    }
 }
