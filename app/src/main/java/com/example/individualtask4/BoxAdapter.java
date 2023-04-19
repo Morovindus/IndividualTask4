@@ -19,10 +19,8 @@ import java.util.ArrayList;
 
 public class BoxAdapter extends BaseAdapter {
     Context ctx;
-    final String LOG_TAG = "myLogs";
     LayoutInflater lInflater;
     ArrayList<Product> objects;
-
     BoxAdapter(Context context, ArrayList<Product> products){
         ctx = context;
         objects = products;
@@ -33,12 +31,10 @@ public class BoxAdapter extends BaseAdapter {
     public int getCount(){
         return objects.size();
     }
-
     @Override
     public Object getItem(int position){
         return objects.get(position);
     }
-
     @Override
     public long getItemId(int position){
         return position;
@@ -65,15 +61,6 @@ public class BoxAdapter extends BaseAdapter {
     Product getProduct(int position){
         return ((Product) getItem(position));
     }
-
-    ArrayList<Product> getBox(){
-        ArrayList<Product> box = new ArrayList<Product>();
-        for (Product p : objects) {
-            if (p.box)
-                box.add(p);
-        }
-        return box;
-    }
     Integer count = 0;
     CompoundButton.OnCheckedChangeListener myCheckChangeList = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -90,5 +77,4 @@ public class BoxAdapter extends BaseAdapter {
             }
         }
     };
-
 }

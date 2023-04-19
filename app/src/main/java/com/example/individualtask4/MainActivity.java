@@ -2,6 +2,7 @@ package com.example.individualtask4;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,14 +13,13 @@ import com.example.individualtask4.databinding.ActivityMainBinding;
 import com.example.individualtask4.databinding.FooterBinding;
 import com.example.individualtask4.databinding.HeaderBinding;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Product> products = new ArrayList<Product>();
-    static final String LOG_TAG = "myLogs";
     BoxAdapter boxAdapter;
-    View header, footer;
     ListView lvMain;
     private static ActivityMainBinding binding_main;
     private static FooterBinding binding_footer;
@@ -42,12 +42,10 @@ public class MainActivity extends AppCompatActivity {
         lvMain.addHeaderView(binding_header.getRoot());
         lvMain.addFooterView(binding_footer.getRoot());
         lvMain.setAdapter(boxAdapter);
-
     }
 
     public static void Change(Integer count){
         binding_footer.tvText1.setText("Товаров в корзине: " + count.toString());
-        Log.d(LOG_TAG, count.toString());
     }
     void fillData(){
         products.add(new Product("#123456", "Батарейка ААА", 99,
@@ -64,10 +62,24 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.picture_6_foreground, false));
     }
 
+    public void showResult(View view){
+        Intent intent = new Intent(this, SecondActivity.class);
+        ArrayList<Product> box = getBox();
+
+        intent.putExtra("ARRAYLIST", box);
+        startActivity(intent);
+    }
+    ArrayList<Product> getBox(){
+        ArrayList<Product> box = new ArrayList<Product>();
+        for (Product p : products) {
+            if (p.box)
+                box.add(p);
+        }
+        return box;
+    }
     void createHeader(String text){
         binding_header.tvText.setText(text);
     }
-
     void createFooter(String text){
         binding_footer.tvText1.setText(text);
     }
